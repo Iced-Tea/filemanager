@@ -29,7 +29,6 @@ class FileNavigatorScope extends Component {
     let path = 'Customization area/Sound/rty 23';
     this.nodeInitId = await connectors.nodejs_v1.api.getIdForPath(apiOptions, path);
     this.forceUpdate();
-    // this.setState({ nodeInitId });
   }
 
   getIcon(name) {
