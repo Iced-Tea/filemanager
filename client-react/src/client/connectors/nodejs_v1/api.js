@@ -40,8 +40,7 @@ async function idToPath(id) {
 
 async function getResourceById(options, id) {
   let route = `${options.apiRoot}/files/${id}`;
-  let method = 'GET';
-  let response = await request(method, route).catch((error) => {
+  let response = await request.get(route).catch((error) => {
     console.error(`Filemanager. getResourceById(${id})`, error);
   });
 
@@ -51,8 +50,7 @@ async function getResourceById(options, id) {
 
 async function getChildrenForId(options, id) {
   let route = `${options.apiRoot}/files/${id}/children`;
-  let method = 'GET';
-  let response = await request(method, route).catch((error) => {
+  let response = await request.get(route).catch((error) => {
     console.error(`Filemanager. getChildrenForId(${id})`, error);
   });
 
@@ -77,12 +75,30 @@ async function getParentsForId(options, id, result = []) {
   return await getParentsForId(options, resource.parentId, [parent].concat(result));
 }
 
+async function getBaseResource(options) {
+  let route = `${options.apiRoot}/files`;
+  let response = await request.get(route).catch((error) => {
+    console.error('Filemanager. getBaseResource()', error);
+  });
+  return normalizeResource(response.body);
+}
+
+async function getRootId(options) {
+  let resource = await getBaseResource(options);
+  return resource.id;
+}
+
 async function getIdForPartPath(options, currId, pathArr) {
-  let { resourceChildren } = await getChildrenForId(options, id);
+  console.log('pathArr:', pathArr);
+  console.log(currId);
+  let { resourceChildren } = await getChildrenForId(options, currId);
+
+  console.log(resourceChildren);
 
   for (let i = 0; i < resourceChildren.length; i++) {
     let resource = resourceChildren[i];
-    if (resource.name === resource.name) {
+    if (resource.name === pathArr[0]) {
+      console.log(resource.name, resource.id);
       if (pathArr.length === 1) {
         return resource.id;
       } else {
@@ -95,12 +111,7 @@ async function getIdForPartPath(options, currId, pathArr) {
 }
 
 async function getIdForPath(options, path) {
-  let route = `${options.apiRoot}/files`;
-  let method = 'GET';
-  let response = await request(method, route).catch((error) => {
-    console.error('Filemanager. getIdForPath()', error);
-  });
-  let resource = normalizeResource(response);
+  let resource = await getBaseResource(options);
 
   let pathArr = path.split('/');
 
@@ -109,8 +120,10 @@ async function getIdForPath(options, path) {
   }
 
   if (pathArr.length === 1) {
-    return pathArr[0];
+    return resource.id;
   }
+
+  console.log(resource.id);
 
   return await getIdForPartPath(options, resource.id, pathArr.slice(1));
 }
@@ -122,8 +135,6 @@ async function getParentIdForResource(options, resource) {
 async function readLocalFile() {
   return new Promise((resolve, reject) => {
     let uploadInput = document.createElement("input");
-    let reader = new FileReader();
-
     uploadInput.addEventListener('change', (e) => {
       let file = uploadInput.files[0];
       resolve({
@@ -164,7 +175,6 @@ async function uploadFileToId(options, parentId, { onStart, onSuccess, onFail, o
 async function downloadResources(options, items) {
   let name = items[0].name;
   let route = `${options.apiRoot}/download`;
-  let method = 'GET';
   let req = request.get(route);
   for (let i = 0; i < items.length; i++) {
     req.query({ items: items[i].id });
@@ -181,13 +191,12 @@ async function downloadResources(options, items) {
 
 async function createFolder(options, parentId, folderName) {
   let route = `${options.apiRoot}/files`;
-  let method = 'POST';
   let params = {
     parentId,
     name: folderName,
     type: 'dir'
   };
-  let response = await request(method, route).send(params).
+  let response = await request.post(route).send(params).
   catch((error) => {
     console.error(`Filemanager. createFolder(${id})`, error);
   });
@@ -235,6 +244,7 @@ export default {
   getResourceById,
   getCapabilitiesForResource,
   getChildrenForId,
+  getRootId,
   getParentsForId,
   getParentIdForResource,
   getResourceName,

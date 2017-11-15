@@ -24,8 +24,8 @@ FileNavigator is
       apiOptions={{
         apiRoot: `${window.env.SERVER_URL}/api`
       }}
-      capabilities={_scope.connectors.nodejs_v1.capabilities}
-      initialResourceId={_scope.connectors.nodejs_v1.id.encode(`/`)}
+      capabilities={_scope.connectors.nodejs_v1.capabilities}      
+      initialResourceId={_scope.nodeInitId}
       listViewLayout={_scope.connectors.nodejs_v1.listViewLayout}
       viewLayoutOptions={_scope.connectors.nodejs_v1.viewLayoutOptions}
       signInRenderer={() => (
@@ -34,7 +34,6 @@ FileNavigator is
       )}
     />
   </div>
-  
 
   {/*GOOGLE_DRIVE_EXAMPLE*/}
   
@@ -49,7 +48,6 @@ FileNavigator is
         SCOPES: 'https://www.googleapis.com/auth/drive'
       }}
       capabilities={_scope.connectors.google_drive_v2.capabilities}
-      initialResourceId="root"
       listViewLayout={_scope.connectors.google_drive_v2.listViewLayout}
       viewLayoutOptions={_scope.connectors.google_drive_v2.viewLayoutOptions}
       signInRenderer={() => (
@@ -78,7 +76,7 @@ FileNavigator is
       )}
     />
   </div>
-
+  
 </div>
   <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
     <strong style={{ marginRight: '8px' }}>Google Drive</strong>

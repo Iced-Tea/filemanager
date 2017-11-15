@@ -48,6 +48,7 @@ class FileNavigator extends Component {
       config: {},
       dialogElement: null,
       error: null,
+      initialResourceId: '',
       loadingResourceLocation: false,
       loadingView: false,
       notifications: [],
@@ -63,22 +64,22 @@ class FileNavigator extends Component {
 
   startViewLoading = () => {
     this.setState({ loadingView: true, loadingResourceLocation: true });
-  }
+  };
 
   stopViewLoading = () => {
     this.setState({ loadingView: false });
-  }
+  };
 
   focusView = () => {
     this.viewRef.focus();
-  }
+  };
 
   handleApiReady = () => {
-    let { initialResourceId } = this.props;
+    let { initialResourceId } = this.state;
     let resourceId = this.state.resource.id;
     let idToNavigate = typeof resourceId === 'undefined' ? initialResourceId : resourceId;
     this.navigateToDir(idToNavigate);
-  }
+  };
 
   monitorApiAvailability = () => {
     clearTimeout(this.apiAvailabilityTimeout);
@@ -91,12 +92,18 @@ class FileNavigator extends Component {
         this.monitorApiAvailability();
       }
     }, MONITOR_API_AVAILABILITY_TIMEOUT);
+  };
+
+  async setInitialResourceId() {
+    let { api, initialResourceId, apiOptions } = this.props;
+    initialResourceId = initialResourceId === '' ? await api.getRootId(apiOptions) : initialResourceId;
+    this.setState({ initialResourceId });
   }
 
   async componentDidMount() {
-    let { initialResourceId, apiOptions, api, capabilities } = this.props;
-    let { apiInitialized, apiSignedIn } = this.state;
+    await this.setInitialResourceId();
 
+    let { apiOptions, api, capabilities } = this.props;
     let capabilitiesProps = this.getCapabilitiesProps();
     let initializedCapabilities = capabilities(apiOptions, capabilitiesProps);
     this.setState({ initializedCapabilities });
@@ -114,16 +121,16 @@ class FileNavigator extends Component {
 
   handleApiInitSuccess = () => {
     this.setState({ apiInitialized: true });
-  }
+  };
 
   handleApiInitFail = () => {
     this.setState({ apiInititalized: false, resourceChildren: [] });
     this.monitorApiAvailability();
-  }
+  };
 
   handleApiSignInSuccess = () => {
     this.setState({ apiSignedIn: true });
-  }
+  };
 
   handleApiSignInFail = () => {
     this.monitorApiAvailability();
@@ -133,12 +140,12 @@ class FileNavigator extends Component {
       resource: [],
       resourceChildren: []
     });
-  }
+  };
 
   handleLocationBarChange = (id) => {
     let { resource, resourceLocation } = this.state;
     this.navigateToDir(id, resource.id);
-  }
+  };
 
   navigateToDir = async (toId, idToSelect, startLoading = true) => {
     if (startLoading) {
@@ -157,7 +164,7 @@ class FileNavigator extends Component {
 
     this.stopViewLoading();
     this.setParentsForResource(resource);
-  }
+  };
 
   async setParentsForResource(resource) {
     let resourceParents = await this.getParentsForId(resource.id);
@@ -190,11 +197,11 @@ class FileNavigator extends Component {
 
   handleClickOutside = () => {
     this.handleSelection([]);
-  }
+  };
 
   handleSelection = (selection) => {
     this.setState({ selection });
-  }
+  };
 
   handleSort = async ({ sortBy, sortDirection }) => {
     let { apiOptions } = this.props;
@@ -208,15 +215,15 @@ class FileNavigator extends Component {
     this.setState({ loadingView: true });
     let newResourceChildren = await sort({ sortBy, sortDirection });
     this.setState({ sortBy, sortDirection, resourceChildren: newResourceChildren, loadingView: false });
-  }
+  };
 
   handleResourceItemClick = async ({ event, number, rowData }) => {
 
-  }
+  };
 
   handleResourceItemRightClick = async ({ event, number, rowData }) => {
 
-  }
+  };
 
   handleResourceItemDoubleClick = async ({ event, number, rowData }) => {
     let { loadingView, resource } = this.state;
@@ -232,7 +239,7 @@ class FileNavigator extends Component {
     }
 
     this.focusView();
-  }
+  };
 
   handleViewKeyDown = async (e) => {
     let { api, apiOptions } = this.props;
@@ -265,27 +272,27 @@ class FileNavigator extends Component {
         this.navigateToDir(parentId, resource.id);
       }
     }
-  }
+  };
 
   handleKeyDown = async (e) => {
 
-  }
+  };
 
   handleViewRef = async (ref) => {
     this.viewRef = ref;
-  }
+  };
 
   showDialog = (dialogElement) => {
     this.setState({ dialogElement });
-  }
+  };
 
   hideDialog = () => {
     this.setState({ dialogElement: null });
-  }
+  };
 
   updateNotifications = (notifications) => {
     this.setState({ notifications });
-  }
+  };
 
   getCapabilitiesProps = () => ({
     showDialog: this.showDialog,
@@ -308,7 +315,6 @@ class FileNavigator extends Component {
       apiOptions,
       capabilities,
       className,
-      initialResourceId,
       listViewLayout,
       signInRenderer,
       viewLayoutOptions
