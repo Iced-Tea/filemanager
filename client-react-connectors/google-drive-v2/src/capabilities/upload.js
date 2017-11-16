@@ -1,7 +1,5 @@
 import api from '../api';
-import ContextMenuItem from '../../../components/ContextMenuItem';
-import NotificationProgressItem from '../../../components/NotificationProgressItem';
-import notifUtils from '../../../components/Notifications/utils';
+import { ContextMenuItem, NotificationProgressItem, notifUtils } from '@opuscapita/react-filemanager';
 import { getIcon } from '../icons';
 import nanoid from 'nanoid';
 

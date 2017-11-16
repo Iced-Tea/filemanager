@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
+nconst webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const PACKAGE_VERSION = require('../../package.json').version;

@@ -1,5 +1,5 @@
 import api from '../api';
-import ContextMenuItem from '../../../components/ContextMenuItem';
+import { ContextMenuItem } from '@opuscapita/react-filemanager';
 
 let icon = require('@opuscapita/svg-icons/lib/delete.svg');
 let label = 'Remove';

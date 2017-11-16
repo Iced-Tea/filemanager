@@ -29,8 +29,18 @@
     "react-dom": "0.14.x || 15.x",
     "moment": "2.x"
   },
+  "dependencies": {
+    "@opuscapita/svg-icons": "1.1.1",
+    "detect-it": "3.0.3",
+    "filesize": "3.5.11",
+    "jszip": "3.1.5",
+    "nanoid": "1.0.0",
+    "range-parser": "1.2.0",
+    "sanitize-filename": "1.6.1",
+    "superagent": "3.6.3"
+  },
   "devDependencies": {
-    "@opuscapita/react-filemanager": "file:../client-react/lib/index.js",
+    "@opuscapita/react-filemanager": "file:../../client-react",
     "autoprefixer": "6.7.6",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
@@ -84,15 +94,5 @@
     "webpack-bundle-analyzer": "2.8.2",
     "webpack-dev-middleware": "1.10.1",
     "write-file-webpack-plugin": "3.4.2"
-  },
-  "dependencies": {
-    "@opuscapita/svg-icons": "1.1.1",
-    "detect-it": "3.0.3",
-    "filesize": "3.5.11",
-    "jszip": "3.1.5",
-    "nanoid": "1.0.0",
-    "range-parser": "1.2.0",
-    "sanitize-filename": "1.6.1",
-    "superagent": "3.6.3"
   }
 }

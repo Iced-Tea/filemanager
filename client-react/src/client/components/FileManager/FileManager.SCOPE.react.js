@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { showroomScopeDecorator } from '@opuscapita/react-showroom-client';
 import connectorGoogleDriveV2 from '@opuscapita/react-filemanager-connector-google-drive-v2';
+
 import FileNavigator from '../FileNavigator';
 
 window.FileNavigator = FileNavigator;

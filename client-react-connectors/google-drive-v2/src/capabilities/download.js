@@ -1,9 +1,7 @@
 import React from 'react';
-import { triggerHiddenForm, promptToSaveBlob } from '../../utils/download'
+import { triggerHiddenForm, promptToSaveBlob } from '../../../utils/download';
 import api from '../api';
-import ContextMenuItem from '../../../components/ContextMenuItem';
-import NotificationProgressItem from '../../../components/NotificationProgressItem';
-import notifUtils from '../../../components/Notifications/utils';
+import { ContextMenuItem, NotificationProgressItem, notifUtils } from '@opuscapita/react-filemanager';
 import { getIcon } from '../icons';
 
 const icon = require('@opuscapita/svg-icons/lib/file_download.svg');

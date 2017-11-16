@@ -5,7 +5,7 @@ tmp
 npm-debug.log
 /static
 /build
-/lib
+lib
 node_modules
 demo.tar.gz
 

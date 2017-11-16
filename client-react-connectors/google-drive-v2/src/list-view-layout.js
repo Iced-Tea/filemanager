@@ -1,7 +1,5 @@
 import { Column } from 'react-virtualized';
-import HeaderCell from '../../components/HeaderCell';
-import Cell from '../../components/Cell';
-import NameCell from '../../components/NameCell';
+import { HeaderCell, Cell, NameCell } from '@opuscapita/react-filemanager';
 
 import moment from 'moment';
 import filesize from 'filesize';

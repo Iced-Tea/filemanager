@@ -9,6 +9,9 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const PACKAGE_VERSION = require('../package.json').version;
 const PACKAGE_NAME = require('../package.json').name;
+const env = require('../.env');
+const HOST = require('../.env').HOST;
+const PORT = require('../.env').PORT;
 const NODE_ENV = process.env.NODE_ENV;
 const IS_PRODUCTION_MODE = NODE_ENV === 'production';
 const IS_LINK_MODE = NODE_ENV === 'link';
@@ -17,7 +20,16 @@ const WEBPACK_BUNDLE_ANALYZE = process.env.WEBPACK_BUNDLE_ANALYZE;
 let plugins = [
   new ProgressBarPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
-  new LodashModuleReplacementPlugin()
+  new LodashModuleReplacementPlugin(),
+  new webpack.EnvironmentPlugin([
+    'NODE_ENV',
+    'HOST',
+    'PORT',
+    'SERVER_URL',
+    'CLIENT_ID',
+    'API_SECRET',
+    'API_KEY',
+  ])
 ];
 
 if(IS_LINK_MODE) {
@@ -47,7 +59,9 @@ const entries = [
 ];
 
 entries.push(
-  path.resolve(__dirname, '../index.js')
+  (IS_PRODUCTION_MODE || IS_LINK_MODE) ?
+    path.resolve(__dirname, '../src/client/index.js') :
+    path.resolve(__dirname, '../www/index-page.js')
 );
 
 module.exports = {

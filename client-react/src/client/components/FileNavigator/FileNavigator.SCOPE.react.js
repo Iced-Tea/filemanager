@@ -9,16 +9,19 @@ import React, { Component } from 'react';
 import { showroomScopeDecorator } from '@opuscapita/react-showroom-client';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
-import connectors from '../../connectors';
+import connectorGoogleDriveV2 from '@opuscapita/react-filemanager-connector-google-drive-v2';
 
 @showroomScopeDecorator
 export default
 class FileNavigatorScope extends Component {
   constructor(props) {
     super(props);
-    this.connectors = connectors;
     window.googleDriveSignIn = this.googleDriveSignIn.bind(this);
     window.googleDriveSignOut = this.googleDriveSignOut.bind(this);
+
+    this.connectors = {
+      google_drive_v2: connectorGoogleDriveV2
+    };
   }
 
   getIcon(name) {
