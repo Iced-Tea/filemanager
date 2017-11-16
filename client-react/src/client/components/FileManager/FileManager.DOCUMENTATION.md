@@ -24,6 +24,7 @@ FileManager is
     <FileManager className={_scope.state.themeClassName}>
     
       {/* Use NodeJS API v1 connector */}
+      {/*
       <FileNavigator
         id="cusomization-area"
         api={_scope.connectors.nodejs_v1.api}
@@ -41,6 +42,7 @@ FileManager is
         )}
         onLocationChange={_scope.handleNodejsLocationChange}
       />
+      */}
       
       {/* Use Google Drive API v2 connector */}
       <FileNavigator

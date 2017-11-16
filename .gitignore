@@ -6,11 +6,10 @@ npm-debug.log
 /static
 /build
 /lib
-/node_modules
+node_modules
 demo.tar.gz
 
 package-lock.json
-/state-files/
 yarn.lock
 npm-debug.log
 yarn-debug.log
@@ -29,4 +28,7 @@ client-react/.nyc_output
 /client-react/www/static
 /demo/.gh-pages-tmp
 
+/client-react-connectors/lib
+
+# TODO - remove it
 /client-react/win

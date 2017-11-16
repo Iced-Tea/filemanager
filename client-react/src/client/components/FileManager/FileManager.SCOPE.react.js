@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import React, { Component } from 'react';
 import { showroomScopeDecorator } from '@opuscapita/react-showroom-client';
-import connectors from '../../connectors';
+import connectorGoogleDriveV2 from '@opuscapita/react-filemanager-connector-google-drive-v2';
 import FileNavigator from '../FileNavigator';
 
 window.FileNavigator = FileNavigator;
@@ -32,7 +32,9 @@ class FileManagerScope extends Component {
       themeClassName: 'oc-fm--file-manager--default-theme'
     };
 
-    this.connectors = connectors;
+    this.connectors = {
+      google_drive_v2: connectorGoogleDriveV2
+    };
 
     window.googleDriveSignIn = this.googleDriveSignIn.bind(this);
     window.googleDriveSignOut = this.googleDriveSignOut.bind(this);
